@@ -16,7 +16,8 @@ El código está organizado de la siguiente manera:
 
 - capturas_dados/        # Carpeta para guardar las imágenes con los dados quietos
 - videos-dados/          # Carpeta con los videos de entrada
-
+- dados_detectados/      # Carpeta para guardar las imágenes con los dados y números detectados
+- videos_finales/        # Carpeta con los videos de salida
 
 ## Dependencias
 Este proyecto requiere las siguientes librerías de Python:
@@ -41,14 +42,15 @@ El código se divide en varias secciones clave:
 
 3. Detección de Dados en Reposo
 - Función detectar_area(): Detecta el área de los dados en cada cuadro del video utilizando un rango de colores en el espacio HSV.
-- Función detectar_movimiento(): Detecta la quietud de los dados al comparar los cuadros anteriores con los actuales. Se utiliza un umbral para determinar si los dados están quietos.
+- Función detectar_movimiento(): Detecta la quietud de los dados al comparar los frames anteriores con los actuales. Se utiliza un umbral para determinar si los dados están quietos.
   
 4. Procesamiento de Dados y Detección de Números
 - Función procesar_dado(): Preprocesa la imagen de los dados (conversión a escala de grises, detección de bordes, operaciones morfológicas) y detecta contornos circulares que corresponden a los dados.
-- Función agrupar_contornos_por_cercania_visual(): Agrupa los contornos cercanos para identificar los dados individuales.
-  
-5. Generación de Videos con Bounding Boxes
-Los videos resultantes se guardan con los dados detectados y numerados, agregando cuadros de delimitación azul y los números sobre los dados.
+- Función agrupar_contornos_por_cercania(): Agrupa los contornos cercanos para identificar los dados individuales.
+- Función marcar_dados_y_nros(): Dibuja las bounding boxes en los dados con sus respectivos números.
+
+5. Generación de Videos con Bounding Boxes: 
+- Los videos resultantes se guardan con los dados detectados y numerados, agregando cuadros de delimitación azul y los números sobre los dados.
 
 ## Instrucciones para Ejecutar el Código
 - Coloca los videos en la carpeta videos-dados/.
