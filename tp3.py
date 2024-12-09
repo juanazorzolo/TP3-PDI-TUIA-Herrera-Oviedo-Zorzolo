@@ -128,7 +128,8 @@ for archivo_video in archivos_videos:
                         indices_frames_guardados.append(contador_frames)
                         frame_guardado = True
 
-                        roi_redimensionado = cv2.resize(frame_completo, (int(ancho / 3), int(alto / 3)))
+                        roi_frame = frame_actual[y:y+alto, x:x+ancho]
+                        roi_redimensionado = cv2.resize(roi_frame, (int(ancho / 3), int(alto / 3)))
                         cv2.imshow("ROI - Dados quietos", roi_redimensionado)
 
                 # Mostrar el progreso en tiempo real
@@ -152,6 +153,7 @@ cv2.destroyAllWindows()
 """DETECTAR DADOS Y NÚMEROS DE LOS MISMOS"""
 # Aplica filtros de limpieza
 def procesar_dado(imagen, t1, t2, pk):
+    imagen = imagen[y:y+alto, x:x+ancho]
     img_gris = cv2.cvtColor(imagen, cv2.COLOR_BGR2GRAY)
 
     # Desenfoque para reducir ruido
@@ -194,6 +196,7 @@ def procesar_dado(imagen, t1, t2, pk):
 
 # Detecta nro de cada dado
 def agrupar_contornos_por_cercania(contornos, imagen, umbral_distancia):
+    imagen = imagen[y:y+alto, x:x+ancho]
     img_proceso = imagen.copy()
 
     # Calcular centroides de cada contorno
@@ -277,7 +280,8 @@ def marcar_dados_y_nros(imagen, grupos_contornos, tamano_bbox=100):
         cv2.putText(img_marcada, texto, (cx, cy - mitad_bbox - 10), 
         cv2.FONT_HERSHEY_SIMPLEX, 2.0, (0, 0, 255), 3, cv2.LINE_AA )
 
-    imshow(img_marcada, title="Bounding Boxes con el Número de Cada Dado")
+    imagen_recortada = img_marcada[y:y+alto, x:x+ancho]
+    imshow(imagen_recortada, title="Bounding Boxes con el Número de Cada Dado")
     return img_marcada
 
 archivos_dados = [f for f in os.listdir("capturas_dados") if f.lower().endswith('.png')]
@@ -373,9 +377,8 @@ for video_nombre in videos:
             break
 
         # Redimensionar el frame
-        ancho = frame.shape[1]
-        alto = frame.shape[0]
-        frame = cv2.resize(frame, dsize=(int(ancho/3), int(alto/3)))
+        roi_frame = frame[y:y+alto, x:x+ancho]
+        frame = cv2.resize(roi_frame, dsize=(int(ancho/3), int(alto/3)))
 
         # Visualizar
         cv2.imshow('Video', frame)
