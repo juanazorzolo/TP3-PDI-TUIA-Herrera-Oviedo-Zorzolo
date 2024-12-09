@@ -275,7 +275,7 @@ def marcar_dados_y_nros(imagen, grupos_contornos, tamano_bbox=100):
         # Poner el número del círculo dentro del dado
         texto = str(len(grupo))
         cv2.putText(img_marcada, texto, (cx, cy - mitad_bbox - 10), 
-        cv2.FONT_HERSHEY_SIMPLEX, 2.0, (255, 0, 0), 3, cv2.LINE_AA )
+        cv2.FONT_HERSHEY_SIMPLEX, 2.0, (0, 0, 255), 3, cv2.LINE_AA )
 
     imshow(img_marcada, title="Bounding Boxes con el Número de Cada Dado")
     return img_marcada
