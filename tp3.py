@@ -318,7 +318,7 @@ for i, archivo_video in enumerate(archivos_videos):
     height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     fps = int(cap.get(cv2.CAP_PROP_FPS))
 
-     # Crear video de salida
+    # Crear video de salida
     nombre_salida = os.path.join(carpeta_salida, f"{os.path.splitext(archivo_video)[0]}_modificado.mp4")
     out = cv2.VideoWriter(nombre_salida, cv2.VideoWriter_fourcc(*'mp4v'), fps, (width, height))
 
@@ -381,7 +381,7 @@ for video_nombre in videos:
         frame = cv2.resize(roi_frame, dsize=(int(ancho/3), int(alto/3)))
 
         # Visualizar
-        cv2.imshow('Video', frame)
+        cv2.imshow(f'Video {video_nombre}', frame)
         if cv2.waitKey(25) & 0xFF == ord('q'):
             break
 
